@@ -1,7 +1,7 @@
 <div class="col-md-3 left_col menu_fixed">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
-            <a href="{{route('admin.home')}}" class="site_title"><i class="fas fa-fish"></i>
+        <a href="{{route('admin.home')}}" class="site_title"><img src="{{ asset('logo (2).png') }}">
                 <span>{{ config('app.name') }}</span></a>
         </div>
         <!-- menu profile quick info -->
@@ -17,6 +17,9 @@
                 <ul class="nav side-menu">
                     <li><a href="{{ route('admin.home')}}"><i class="fas fa-home"></i> Home
                         </a>
+                    </li>
+                    <li><a href="{{ route('admin.usuarios.index')}}"><i class="fas fa-user-tie"></i> Usuarios
+                                                                </a>
                     </li>
                 </ul>
             </div>

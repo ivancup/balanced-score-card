@@ -5,7 +5,7 @@
 
 @section('content')
     @component('admin.components.panel')
-        @slot('title', 'Bienvenido a Lestoma.')
+        @slot('title', 'Bienvenido a Alpina.')
         
     @endcomponent
 @endsection

@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/', function () {
+    return redirect('login');
+});
+
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('login.in');
@@ -28,4 +32,19 @@ Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm'
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
-Route::get('/home', 'HomeController@index')->name('admin.home');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/home', 'HomeController@index')->name('admin.home');
+
+    //Usuarios
+    Route::resource('admin/usuarios', 'UserController', ['as' => 'admin'])->except([
+        'show'
+    ]);
+    Route::get('admin/usuarios/data', array('as' => 'admin.usuarios.data', 'uses' => 'UserController@data'));
+    Route::get('admin/usuario/perfil', array('as' => 'admin.usuario.perfil', 'uses' => 'UserController@perfil'));
+    Route::post('admin/usuario/perfil', array(
+        'as' => 'admin.usuario.modificar_perfil',
+        'uses' => 'UserController@modificarPerfil'
+    ));
+});
+
