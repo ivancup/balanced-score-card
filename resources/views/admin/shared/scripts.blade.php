@@ -12,6 +12,6 @@
 @stack('scripts')
 <!-- Custom Theme Scripts -->
 <script src="{{ asset('gentella/build/js/custom.js') }}"></script>
-<script src="{{ asset('js/admin.js') }}"></script>
+{{-- <script src="{{ asset('js/admin.js') }}"></script> --}}
 
 

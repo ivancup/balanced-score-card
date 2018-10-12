@@ -14,7 +14,7 @@
             'class' => 'form-horizontal form-label-lef',
             'novalidate'
         ])!!}
-        @include('autoevaluacion.SuperAdministrador.Roles._form')
+        @include('alpina.roles._form')
         <div class="ln_solid"></div>
         <div class="form-group">
             <div class="col-md-6 col-md-offset-3">

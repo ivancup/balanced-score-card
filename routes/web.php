@@ -46,5 +46,24 @@ Route::group(['middleware' => ['auth']], function () {
         'as' => 'admin.usuario.modificar_perfil',
         'uses' => 'UserController@modificarPerfil'
     ));
+
+    //Roles
+    Route::resource('admin/roles', 'RolController', ['as' => 'admin'])->except([
+        'show'
+    ]);
+    Route::get('admin/roles/data', array('as' => 'admin.roles.data', 'uses' => 'RolController@data'));
+
+    //Areas
+    Route::resource('admin/areas', 'AreasController', ['as' => 'admin'])->except([
+        'show'
+    ]);
+    Route::get('admin/areas/data', array('as' => 'admin.areas.data', 'uses' => 'AreasController@data'));
+
+    //Areas
+    Route::resource('admin/empleados', 'EmpleadosController', ['as' => 'admin'])->except([
+        'show'
+    ]);
+    Route::get('admin/empleados/data', array('as' => 'admin.empleados.data', 'uses' => 'EmpleadosController@data'));
+
 });
 

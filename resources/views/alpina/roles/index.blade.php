@@ -5,7 +5,6 @@
 @extends('admin.layouts.app')
 @section('content')
     @component('admin.components.panel') @slot('title', 'Roles')
-    @can('CREAR_ROLES')
         <div class="col-md-12">
             <div class="actions">
                 <a href="{{ route('admin.roles.create') }}" class="btn btn-info">
@@ -14,14 +13,11 @@
         <br>
         <br>
         <br>
-    @endcan
-    @can('VER_ROLES')
         <div class="col-md-12">
             @component('admin.components.datatable', ['id' => 'rol_table_ajax']) @slot('columns', [ 'id', 'Nombre',
     'Acciones' => ['style' => 'width:85px;']]) @endcomponent
 
         </div>
-    @endcan
     @endcomponent
 @endsection
 {{-- Scripts necesarios para el formulario --}} 
@@ -73,8 +69,8 @@
                     {data: 'name', name: 'Nombre'},
                     {
                         defaultContent:
-                            '@can('ELIMINAR_ROLES')<a href="javascript:;" class="btn btn-simple btn-danger btn-sm remove" data-toggle="confirmation"><i class="fa fa-trash"></i></a>@endcan' +
-                            '@can('MODIFICAR_ROLES')<a href="javascript:;" class="btn btn-simple btn-info btn-sm edit" data-toggle="confirmation"><i class="fa fa-pencil"></i></a>@endcan',
+                            '<a href="javascript:;" class="btn btn-simple btn-danger btn-sm remove" data-toggle="confirmation"><i class="fas fa-trash-alt"></i></a>' +
+                            '<a href="javascript:;" class="btn btn-simple btn-info btn-sm edit" data-toggle="confirmation"><i class="fas fa-edit"></i></a>',
                         data: 'action',
                         name: 'action',
                         title: 'Acciones',
