@@ -20,6 +20,13 @@ class Empleado extends Model
      */
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['fecha_nacimiento'];
+
     public function area()
     {
         return $this->belongsTo(Area::class, 'id_area', 'id');
