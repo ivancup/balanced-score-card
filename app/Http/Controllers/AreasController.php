@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Area;
 use DataTables;
+use App\Http\Requests\AreaRequest;
 
 class AreasController extends Controller
 {
@@ -42,7 +43,7 @@ class AreasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AreaRequest $request)
     {
         $area = new Area();
         $area->nombre = $request->get('nombre_area');
@@ -84,7 +85,7 @@ class AreasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AreaRequest $request, $id)
     {
         $areas = Area::findOrFail($id);
         $areas->nombre = $request->get('nombre_area');
@@ -115,5 +116,37 @@ class AreasController extends Controller
             'title' => '¡Area Eliminada!'
         ], 200)// 200 Status Code: Standard response for successful HTTP request
             ->header('Content-Type', 'application/json');
+    }
+
+    public function asignar($id_area)
+    {
+        return view('alpina.areas.asignar_supervisor');
+    }
+
+    public function dataAsignar(Request $request, $id_area)
+    {
+        if ($request->ajax() && $request->isMethod('GET')) {
+            $usuarios = User::where('id_area', '=', $id_area)->get();
+            return DataTables::of($usuarios)
+                ->addColumn('seleccion', function ($usuario) use ($id) {
+                    $checked = '';
+                    foreach ($usuario->procesos as $proceso) {
+                        if ($proceso->PK_PCS_Id == $id) {
+                            $checked = 'checked';
+                            break;
+                        }
+                    }
+                    return '<input type="checkbox" class="ids_usuarios" name="seleccion" value="' . $usuario->id . '" ' . $checked . ' />';
+                })
+                ->rawColumns(['seleccion'])
+                ->removeColumn('created_at')
+                ->removeColumn('updated_at')
+                ->make(true);
+        }
+    }
+
+    public function asignarSupervisor(Request $request, $id_area)
+    {
+        
     }
 }

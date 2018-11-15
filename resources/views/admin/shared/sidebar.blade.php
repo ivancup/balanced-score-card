@@ -18,25 +18,42 @@
                     <li><a href="{{ route('admin.home')}}"><i class="fas fa-home"></i> Home
                         </a>
                     </li>
+                    @hasanyrole('GERENTE')
                     <li><a href="{{ route('admin.usuarios.index')}}"><i class="fas fa-user-tie"></i> Usuarios
                                                                 </a>
                     </li>
+                    @endhasanyrole
+
+                    @hasanyrole('GERENTE')
                     <li><a href="{{ route('admin.roles.index')}}"><i class="fas fa-gavel"></i> Roles
                                                                                     </a>
                     </li>
+                    @endhasanyrole
+
+                    @hasanyrole('GERENTE|FUNCIONARIO_RRHH')
                     <li><a href="{{ route('admin.areas.index')}}"><i class="fas fa-users"></i> Areas
                                                                                     </a>
                     </li>
+                    @endhasanyrole
+
+                    @hasanyrole('GERENTE|FUNCIONARIO_RRHH')
                     <li><a href="{{ route('admin.empleados.index')}}"><i class="fas fa-people-carry"></i> Empleados
                                                                                                         </a>
                     </li>
+                    @endhasanyrole
+
+                    @hasanyrole('GERENTE|FUNCIONARIO_RRHH')
                     <li><a href="{{ route('admin.indicadores.index')}}"><i class="fas fa-chart-line"></i> Indicadores
                                                                                                                             </a>
                     </li>
+                    @endhasanyrole
+
+                    @hasanyrole('GERENTE|SUPERVISOR')
                     <li><a href="{{ route('admin.evaluacion.areas')}}">
                         <i class="fab fa-rev"></i> Realizar evaluación
                                                                                                                                                 </a>
                     </li>
+                    @endhasanyrole
                 </ul>
             </div>
 

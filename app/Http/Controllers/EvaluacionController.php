@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Indicador;
 use App\Empleado;
+use App\Area;
 use App\EvaluacionEmpleado;
 use Illuminate\Support\Facades\Auth;
 use DataTables;
@@ -15,6 +16,20 @@ class EvaluacionController extends Controller
     public function areas()
     {
         return view('alpina.evaluacion.areas');
+    }
+
+    public function areasData()
+    {
+        if(Auth::user()->hasRole('GERENTE')){
+            $areas = Area::all();
+            return Datatables::of($areas)
+                ->make(true);
+        }
+        if (Auth::user()->hasRole('SUPERVISOR')) {
+            $areas = Area::where('id', '=', Auth::user()->id_area);
+            return Datatables::of($areas)
+                ->make(true);
+        }
     }
 
     public function empleados($id_area)

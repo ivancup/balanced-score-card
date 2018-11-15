@@ -76,6 +76,10 @@ Route::group(['middleware' => ['auth']], function () {
         'as' => 'admin.evaluacion.areas',
         'uses' => 'EvaluacionController@areas'
     ));
+    Route::get('admin/evaluaciones/areas/data', array(
+        'as' => 'admin.evaluacion.areas.data',
+        'uses' => 'EvaluacionController@areasData'
+    ));
 
     Route::get('admin/evaluaciones/areas/{id_area}/empleados', array(
         'as' => 'admin.evaluacion.areas.empleados',
@@ -93,6 +97,7 @@ Route::group(['middleware' => ['auth']], function () {
         'as' => 'admin.evaluacion.areas.empleados.evaluar',
         'uses' => 'EvaluacionController@evaluarEmpleado'
     ));
+
 
 
 });

@@ -2,7 +2,7 @@
     {!! Form::label('nombre','Nombre', ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']) !!}
     <div class="col-md-6 col-sm-6 col-xs-12">
         {!! Form::text('nombre', old('nombre'), [ 'class' => 'form-control col-md-6 col-sm-6 col-xs-12', 'required' => 'required',
-        'data-parsley-length'=>'[5, 60]', 'data-parsley-trigger'=>"change" ] ) !!}
+        'data-parsley-length'=>'[5, 260]', 'data-parsley-trigger'=>"change" ] ) !!}
     </div>
 </div>
 
@@ -12,12 +12,12 @@
         <div class="col-xs-9">
             <div class="radio">
                 <label>
-      <input name="tipo" value="0" type="radio" {{$indicador->tipo == 0?'checked':''}}>
+      <input name="tipo" value="0" type="radio" {{isset($indicador) && $indicador->tipo == 0?'checked':''}}>
       Cuantitativo</label>
             </div>
             <div class="radio">
                 <label>
-      <input name="tipo" value="1" type="radio" {{$indicador->tipo == 1?'checked':''}}>
+      <input name="tipo" value="1" type="radio" {{isset($indicador) && $indicador->tipo == 1?'checked':''}}>
       Cualitativo</label>
             </div>
         </div>

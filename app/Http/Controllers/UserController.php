@@ -39,7 +39,9 @@ class UserController extends Controller
     {
         if ($request->ajax() && $request->isMethod('GET')) {
 
-            $users = User::where('id', '!=', Auth::id());
+            $users = User::with('area')
+                ->where('id', '!=', Auth::id())
+                ->get();
             return DataTables::of($users)
                 ->addColumn('roles', function ($users) {
                     if (!$users->roles) {
@@ -48,6 +50,12 @@ class UserController extends Controller
                     return $users->roles->map(function ($rol) {
                         return str_limit($rol->name, 30, '...');
                     })->implode(', ');
+                })
+                ->addColumn('areas', function ($users) {
+                    if (!$users->area) {
+                        return 'Ninguna area seleccionada';
+                    }
+                    return $users->area->nombre;
                 })
                 ->rawColumns(['estado'])
                 ->removeColumn('cedula')
@@ -161,7 +169,11 @@ class UserController extends Controller
     public function update(UserRequest $request, $id)
     {
         $user = User::find($id);
-        $user->fill($request->except('password'));
+        $user->name = $request->get('name');
+        $user->lastname = $request->get('lastname');
+        $user->email = $request->get('email');
+        $user->id_estado = $request->get('id_estado');
+        $user->id_area = $request->get('area');
 
         if ($request->get('password')) {
             $user->password = $request->get('password');
@@ -201,27 +213,28 @@ class UserController extends Controller
 
     public function perfil()
     {
-        $estados = Estado::pluck('ESD_Nombre', 'PK_ESD_Id');
+
         $roles = Role::pluck('name', 'name');
-        $user = User::findOrFail(Auth::id());
+        $user = Auth::user();
+        $areas = Area::pluck('nombre', 'id');
         $edit = true;
         return view(
-            'lestoma.SuperAdministrador.Users.perfil',
-            compact('user', 'estados', 'roles', 'edit')
+            'alpina.usuarios.perfil',
+            compact('user', 'areas', 'roles', 'edit')
         );
     }
 
-    public function modificarPerfil(PerfilUsuarioRequest $request)
+    public function modificarPerfil(Request $request)
     {
         $user = User::find(Auth::id());
-        $user->fill($request->except('password'));
+        $user->name = $request->get('name');
+        $user->lastname = $request->get('lastname');
+        $user->email = $request->get('email');
+        $user->id_estado = $request->get('id_estado');
+        $user->id_area = $request->get('area');
 
         if ($request->get('password')) {
             $user->password = $request->get('password');
-        }
-
-        if ($request->get('PK_ESD_Id')) {
-            $user->id_estado = $request->get('PK_ESD_Id') ? $request->get('PK_ESD_Id') : null;
         }
         $user->update();
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DataTables;
 use App\Indicador;
+use App\Http\Requests\IndicadorRequest;
 
 class IndicadorController extends Controller
 {
@@ -46,7 +47,7 @@ class IndicadorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(IndicadorRequest $request)
     {
         $indicador = new Indicador();
         $indicador->nombre = $request->get('nombre');
@@ -90,7 +91,7 @@ class IndicadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(IndicadorRequest $request, $id)
     {
         $indicador = Indicador::findOrFail($id);
         $indicador->nombre = $request->get('nombre');

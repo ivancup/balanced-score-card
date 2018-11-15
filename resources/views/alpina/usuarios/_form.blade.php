@@ -47,11 +47,11 @@
     </div>
 </div>
 
-<div class="item form-group hidden" id='areas'>
+<div class="item form-group" id='areas'>
     {!! Form::label('area', 'Area', ['class' => 'control-label col-md-3 col-sm-3 col-xs-12']) !!}
     <div class="col-md-6 col-sm-6 col-xs-12">
         {!! Form::select('area', $areas, old('area', isset($areas, $user)? $user->id_area : ''), ['class'
-        => 'select2_roles form-control', 'required' => '', 'id'=>'select_area']) !!}
+        => 'select2_roles form-control', 'id'=>'select_area', 'placeholder' => 'Por favor seleccione una area']) !!}
     </div>
 </div>
 

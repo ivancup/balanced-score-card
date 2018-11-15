@@ -16,18 +16,9 @@
     </div>
 </div>
 <div class="item form-group">
-    {!! Form::label('cedula','Cedula', [ 'class'=>'control-label col-md-3 col-sm-3 col-xs-12']) !!}
-
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        {!! Form::text('cedula', old('cedula'),[ 'class' => 'form-control col-md-6 col-sm-6 col-xs-12', 'required' => 'required',
-        'data-parsley-type'=>"number", 'data-parsley-length' => "[1, 10]", 'data-parsley-trigger'=>"change" ]) !!}
-    </div>
-</div>
-<div class="item form-group">
     {!! Form::label('email','Email', [ 'class'=>'control-label col-md-3 col-sm-3 col-xs-12']) !!}
     <div class="col-md-6 col-sm-6 col-xs-12">
-        {!! Form::email('email', old('email'),[ 'class' => 'form-control col-md-6 col-sm-6 col-xs-12', 'data-parsley-pattern' =>
-        '/@(ucundinamarca.edu.co)/g', 'data-parsley-pattern-message' => 'El correo debe ser institucional', 'required' =>
+        {!! Form::email('email', old('email'),[ 'class' => 'form-control col-md-6 col-sm-6 col-xs-12', 'required' =>
         'required' ] ) !!}
     </div>
 </div>
@@ -49,14 +40,6 @@
         'id' => 'password_confimation'] ) !!}
     </div>
 </div>
-@can('ACCEDER_USUARIOS')
-<div class="item form-group">
-    {!! Form::label('estado','Estado', [ 'class'=>'control-label col-md-3 col-sm-3 col-xs-12']) !!}
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        {!! Form::select('PK_ESD_Id', isset($estados)?$estados:[], old('PK_ESD_Id', isset($user)? $user->id_estado:''), [ 'class' => 'select2_user form-control',
-        'required']) !!}
-    </div>
-</div>
 
 <div class="item form-group">
     {!! Form::label('roles', 'Roles', ['class' => 'control-label col-md-3 col-sm-3 col-xs-12']) !!}
@@ -67,4 +50,12 @@
         => '', 'id'=>'select_rol']) !!}
     </div>
 </div>
-@endcan
+
+<div class="item form-group" id='areas'>
+    {!! Form::label('area', 'Area', ['class' => 'control-label col-md-3 col-sm-3 col-xs-12']) !!}
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {!! Form::select('area', $areas, old('area', isset($areas, $user)? $user->id_area : ''), ['class' => 'select2_roles form-control',
+        'id'=>'select_area', 'placeholder' => 'Por favor seleccione una area']) !!}
+    </div>
+</div>
+

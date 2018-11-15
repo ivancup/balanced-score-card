@@ -50,7 +50,7 @@
                 {data: 'nombre', name: 'Nombre'},
                 {
                     defaultContent:
-                        '<a data-toggle="tooltip" title="Evaluar empleados" href="javascript:;" class="btn btn-simple btn-info btn-sm evaluar"><i class="fas fa-book"></i></a>',
+                        '@hasanyrole('SUPERVISOR|GERENTE')<a data-toggle="tooltip" title="Evaluar empleados" href="javascript:;" class="btn btn-simple btn-info btn-sm evaluar"><i class="fas fa-book"></i></a>@endhasanyrole',
                     name: 'action',
                     title: 'Acciones',
                     orderable: false,
@@ -62,7 +62,7 @@
                     responsivePriority: 2
                 }
             ];
-            routeDatatable = "{{ route('admin.areas.data') }}";
+            routeDatatable = "{{ route('admin.evaluacion.areas.data') }}";
 
 
             table = $('#areas_table_ajax').DataTable({
