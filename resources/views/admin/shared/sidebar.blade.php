@@ -30,6 +30,13 @@
                     <li><a href="{{ route('admin.empleados.index')}}"><i class="fas fa-people-carry"></i> Empleados
                                                                                                         </a>
                     </li>
+                    <li><a href="{{ route('admin.indicadores.index')}}"><i class="fas fa-chart-line"></i> Indicadores
+                                                                                                                            </a>
+                    </li>
+                    <li><a href="{{ route('admin.evaluacion.areas')}}">
+                        <i class="fab fa-rev"></i> Realizar evaluación
+                                                                                                                                                </a>
+                    </li>
                 </ul>
             </div>
 

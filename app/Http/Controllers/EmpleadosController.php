@@ -9,6 +9,7 @@ use App\Area;
 use Carbon\Carbon;
 use App\User;
 use App\Http\Requests\EmpleadoRequest;
+use App\EvaluacionEmpleado;
 
 class EmpleadosController extends Controller
 {
@@ -26,6 +27,7 @@ class EmpleadosController extends Controller
                 ->addColumn('area', function ($empleado) {
                     return $empleado->area->nombre;
                 })
+                
                 
                 ->make(true);
         }

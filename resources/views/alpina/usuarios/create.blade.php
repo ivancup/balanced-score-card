@@ -108,6 +108,15 @@
                     }
                 });
             });
+
+            $('#select_rol').change(function (e) {
+                if (this.value == 'SUPERVISOR') {
+                    $('#areas').removeClass('hidden');
+                }
+                else{
+                    $('#areas').addClass('hidden');
+                }
+            });
         });
 
 

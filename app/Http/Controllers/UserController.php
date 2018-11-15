@@ -12,6 +12,7 @@ use App\Http\Requests\PerfilUsuarioRequest;
 use Illuminate\Support\Facades\Gate;
 use App\User;
 use App\Estado;
+use App\Area;
 
 class UserController extends Controller
 {
@@ -73,7 +74,8 @@ class UserController extends Controller
     {
         $roles = Role::pluck('name', 'name');
         $estados = Estado::pluck('nombre', 'id');
-        return view('alpina.usuarios.create', compact('estados', 'roles'));
+        $areas = Area::pluck('nombre', 'id');
+        return view('alpina.usuarios.create', compact('estados', 'roles', 'areas'));
     }
 
     /**
@@ -93,6 +95,7 @@ class UserController extends Controller
         $user->email = $request->get('email');
         $user->password = bcrypt($request->get('password'));
         $user->id_estado = $request->get('id_estado');
+        $user->id_area = $request->get('area');
         $user->save();
 
         $roles = $request->input('roles') ? $request->input('roles') : [];
@@ -136,10 +139,11 @@ class UserController extends Controller
         $estados = Estado::pluck('nombre', 'id');
         $roles = Role::pluck('name', 'name');
         $user = User::findOrFail($id);
+        $areas = Area::pluck('nombre', 'id');
         $edit = true;
         return view(
             'alpina.usuarios.edit',
-            compact('user', 'estados', 'roles', 'edit', 'programa')
+            compact('user', 'estados', 'roles', 'edit', 'programa', 'areas')
         );
 
     }

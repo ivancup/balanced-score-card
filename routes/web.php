@@ -65,5 +65,35 @@ Route::group(['middleware' => ['auth']], function () {
     ]);
     Route::get('admin/empleados/data', array('as' => 'admin.empleados.data', 'uses' => 'EmpleadosController@data'));
 
+    //Indicadores
+    Route::resource('admin/indicadores', 'IndicadorController', ['as' => 'admin'])->except([
+        'show'
+    ]);
+    Route::get('admin/indicadores/data', array('as' => 'admin.indicadores.data', 'uses' => 'IndicadorController@data'));
+
+    //Evaluacion 
+    Route::get('admin/evaluaciones/areas', array(
+        'as' => 'admin.evaluacion.areas',
+        'uses' => 'EvaluacionController@areas'
+    ));
+
+    Route::get('admin/evaluaciones/areas/{id_area}/empleados', array(
+        'as' => 'admin.evaluacion.areas.empleados',
+        'uses' => 'EvaluacionController@empleados'
+    ));
+    Route::get('admin/evaluaciones/areas/{id_area}/empleados/data', array(
+        'as' => 'admin.evaluacion.areas.empleados.data',
+        'uses' => 'EvaluacionController@empleadosData'
+    ));
+    Route::get('admin/evaluaciones/areas/{id_area}/empleados/{id_empleado}', array(
+        'as' => 'admin.evaluacion.areas.empleados.evaluar.formulario',
+        'uses' => 'EvaluacionController@formularioEvaluarEmpleado'
+    ));
+    Route::post('admin/evaluaciones/areas/{id_area}/empleados/{id_empleado}', array(
+        'as' => 'admin.evaluacion.areas.empleados.evaluar',
+        'uses' => 'EvaluacionController@evaluarEmpleado'
+    ));
+
+
 });
 

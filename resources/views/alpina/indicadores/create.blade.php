@@ -1,44 +1,45 @@
 {{-- Titulo de la pagina --}}
-@section('title', 'Usuarios')
-
+@section('title', 'Indicadores')
 
 {{-- Contenido principal --}}
 @extends('admin.layouts.app')
 
 @section('content')
     @component('admin.components.panel')
-        @slot('title', 'Modificar Usuario')
-        {!! Form::model($user, [
-            'route' => ['admin.usuarios.update', $user],
-            'method' => 'PUT',
-            'id' => 'form_modificar_usuario',
-            'class' => 'form-horizontal form-label-lef',
+        @slot('title', 'Crear Indicador')
+        {!! Form::open([
+            'route' => 'admin.indicadores.store',
+            'method' => 'POST',
+            'id' => 'form_crear_indicador',
+            'class' => 'form-horizontal form-label-left',
             'novalidate'
         ])!!}
-        @include('alpina.usuarios._form')
+        @include('alpina.indicadores._form')
         <div class="ln_solid"></div>
         <div class="form-group">
             <div class="col-md-6 col-md-offset-3">
 
-                {{ link_to_route('admin.usuarios.index',"Cancelar", [], ['class' => 'btn btn-info']) }}
-                {!! Form::submit('Modificar usuario', ['class' => 'btn btn-success']) !!}
+                {{ link_to_route('admin.indicadores.index',"Cancelar", [], ['class' => 'btn btn-info']) }}
+                {!! Form::submit('Crear Indicador', ['class' => 'btn btn-success']) !!}
             </div>
         </div>
         {!! Form::close() !!}
     @endcomponent
 @endsection
 
-{{-- Estilos necesarios para el formulario --}} 
+{{-- Estilos necesarios para el formulario --}}
 @push('styles')
     <!-- PNotify -->
     <link href="{{ asset('gentella/vendors/pnotify/dist/pnotify.css') }}" rel="stylesheet">
     <link href="{{ asset('gentella/vendors/pnotify/dist/pnotify.buttons.css') }}" rel="stylesheet">
     <link href="{{ asset('gentella/vendors/pnotify/dist/pnotify.nonblock.css') }}" rel="stylesheet">
-    <!-- Select2 -->
+    <!-- bootstrap-daterangepicker -->
+    <link href="{{ asset('gentella/vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+    <!-- Select 2 -->
     <link href="{{ asset('gentella/vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet">
 @endpush
 
-{{-- Scripts necesarios para el formulario --}} 
+{{-- Scripts necesarios para el formulario --}}
 @push('scripts')
     <!-- validator -->
     <script src="{{ asset('gentella/vendors/parsleyjs/parsley.min.js') }}"></script>
@@ -49,14 +50,17 @@
     <script src="{{ asset('gentella/vendors/pnotify/dist/pnotify.nonblock.js') }}"></script>
     <!-- Select2 -->
     <script src="{{ asset('gentella/vendors/select2/dist/js/select2.full.min.js') }}"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="{{asset('gentella/vendors/moment/min/moment.min.js')}}"></script>
+    <script src="{{asset('gentella/vendors/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 @endpush
-{{-- Funciones necesarias por el formulario --}} 
+{{-- Funciones necesarias por el formulario --}}
 @push('functions')
     <script type="text/javascript">
+
         $(document).ready(function () {
-            $('.select2_user').select2();
-            $('.select2_roles').select2();
-            var form = $('#form_modificar_usuario');
+            
+            var form = $('#form_crear_indicador');
             $(form).parsley({
                 trigger: 'change',
                 successClass: "has-success",
@@ -68,19 +72,6 @@
                 errorTemplate: '<span></span>',
             });
 
-            if($('#select_rol').val() == 'SUPERVISOR'){
-                $('#areas').removeClass('hidden');
-            }
-
-            $('#select_rol').change(function (e) {
-                if (this.value == 'SUPERVISOR') {
-                    $('#areas').removeClass('hidden');
-                }
-                else{
-                    $('#areas').addClass('hidden');
-                }
-            });
-
 
             form.submit(function (e) {
 
@@ -90,14 +81,19 @@
                     type: form.attr('method'),
                     data: form.serialize(),
                     dataType: 'json',
-                    Accept: 'application/json',
                     success: function (response, NULL, jqXHR) {
-                        sessionStorage.setItem('update', 'El Usuario se ha modificado exitosamente.');
-
-                        window.location.href = " {{ route('admin.usuarios.index')}} ";
+                        
+                        $(form)[0].reset();
+                        $(form).parsley().reset();
+                        new PNotify({
+                            title: response.title,
+                            text: response.msg,
+                            type: 'success',
+                            styling: 'bootstrap3'
+                        });
                     },
                     error: function (data) {
-                        console.log(data);
+
                         var errores = data.responseJSON.errors;
                         var msg = '';
                         $.each(errores, function (name, val) {
@@ -113,7 +109,5 @@
                 });
             });
         });
-
     </script>
-
 @endpush
