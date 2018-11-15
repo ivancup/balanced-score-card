@@ -156,6 +156,80 @@ function selectMultiplesParametros(selects, id_selects, select_objetivo, ruta, d
     });
 }
 
+function crearGrafica(canvas = null, tipo, titulo = null, etiquetas, etiquetasData, data = null) {
+    var dynamicColorsArray = function (cantidad) {
+        let colors = [];
+        for (let i = 0; i < cantidad; i++) {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            colors.push("rgb(" + r + "," + g + "," + b + ")");
+        }
+        return colors
+
+    };
+
+    var dynamicColors = function () {
+        var r = Math.floor(Math.random() * 255);
+        var g = Math.floor(Math.random() * 255);
+        var b = Math.floor(Math.random() * 255);
+        return "rgb(" + r + "," + g + "," + b + ")";
+    };
+
+    var dataset = [];
+
+    for (let i = 0; i < etiquetasData.length; i++) {
+        let aux = {};
+        aux['label'] = etiquetasData[i];
+        aux['data'] = data[i];
+        if (tipo != 'line') {
+            aux['backgroundColor'] = dynamicColorsArray(data[i].length);
+        }
+        else {
+            aux['borderColor'] = dynamicColors();
+            aux['fill'] = false;
+        }
+        dataset.push(aux);
+    }
+
+
+    var jsonChart = {
+        type: tipo,
+        data: {
+            labels: etiquetas,
+            datasets: dataset,
+        },
+        options: {
+            title: {
+                display: true,
+                text: titulo
+            },
+            "scales": {
+            }
+
+        },
+    };
+    if (tipo == 'bar' || tipo == 'horizontalBar') {
+        jsonChart.options.scales = {
+            "yAxes": [{
+                "ticks": {
+                    "beginAtZero": true
+                }
+            }],
+            "xAxes": [{
+                "ticks": {
+                    "beginAtZero": true
+                }
+            }]
+        };
+    }
+
+    var ctx = document.getElementById(canvas).getContext('2d');
+    var myChart = new Chart(ctx, jsonChart);
+
+    return myChart;
+}
+
 
 function fecha(nombre) {
     $(nombre).daterangepicker({
@@ -200,47 +274,4 @@ function fecha(nombre) {
     });
 }
 
-function mostrarProcesos(ruta) {
-    var form = $('#form_mostrar_proceso');
-    $('#procesos_usuario').find('option').remove();
-    $.ajax({
-        
-        url: ruta,
-        type: 'GET',
-        dataType: 'json',
-        success: function (r) {
-            console.log(r);
 
-            $.each(r, function (key, data) { // indice, valor
-                $("#procesos_usuario").append('<option value="' + key + '">' + data + '</option>');
-            })
-            $('#modal_mostrar_procesos').modal('toggle');
-        },
-        error: function () {
-            alert('Ocurrio un error en el servidor ..');
-        }
-    });
-}
-
-function mostrarPonderaciones(ruta,nombre) {
-    var form = $('#form_crear_preguntas');
-    console.log(nombre);
-    $(nombre).find('option').remove();
-    $.ajax({
-        
-        url: ruta,
-        type: 'GET',
-        dataType: 'json',
-        success: function (r) {
-            console.log(r);
-            console.log(ruta);
-            $.each(r, function (key, data) { // indice, valor
-                
-                $("select[name*='"+nombre+"']" ).append('<option value="' + key + '">' + data + '</option>');
-            })
-        },
-        error: function () {
-            alert('Ocurrio un error en el servidor ..');
-        }
-    });
-}

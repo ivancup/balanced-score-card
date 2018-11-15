@@ -40,7 +40,7 @@
         'id' => 'password_confimation'] ) !!}
     </div>
 </div>
-
+@hasanyrole('GERENTE')
 <div class="item form-group">
     {!! Form::label('roles', 'Roles', ['class' => 'control-label col-md-3 col-sm-3 col-xs-12']) !!}
     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -51,6 +51,7 @@
     </div>
 </div>
 
+
 <div class="item form-group" id='areas'>
     {!! Form::label('area', 'Area', ['class' => 'control-label col-md-3 col-sm-3 col-xs-12']) !!}
     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -58,4 +59,5 @@
         'id'=>'select_area', 'placeholder' => 'Por favor seleccione una area']) !!}
     </div>
 </div>
+@endhasanyrole
 

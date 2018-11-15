@@ -54,6 +54,18 @@
                                                                                                                                                 </a>
                     </li>
                     @endhasanyrole
+                    @hasanyrole('GERENTE|SUPERVISOR')
+                    <li><a href="{{ route('admin.reporte.empleados')}}">
+                        <i class="fas fa-chart-bar"></i> Reporte empleado
+                                                                                                                                                </a>
+                    </li>
+                    @endhasanyrole
+                    @hasanyrole('GERENTE|SUPERVISOR')
+                    <li><a href="{{ route('admin.reporte.areas')}}">
+                        <i class="fas fa-chart-pie"></i> Reporte área
+                                                                                                                                                </a>
+                    </li>
+                    @endhasanyrole
                 </ul>
             </div>
 

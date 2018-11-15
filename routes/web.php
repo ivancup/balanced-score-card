@@ -98,6 +98,31 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'EvaluacionController@evaluarEmpleado'
     ));
 
+    //Reporte empleado
+    Route::get('admin/reportes/empleados', array(
+        'as' => 'admin.reporte.empleados',
+        'uses' => 'ReportesController@reporteEmpleado'
+    ));
+    Route::post('admin/reportes/empleados', array(
+        'as' => 'admin.reporte.empleados.formulario',
+        'uses' => 'ReportesController@graficasEmpleado'
+    ));
+    
+    Route::get('admin/reportes/empleados/{id_area}', array(
+        'as' => 'admin.reporte.areas.empleados',
+        'uses' => 'ReportesController@areaEmpleado'
+    ));
+
+    //Reporte area
+    Route::get('admin/reportes/areas', array(
+        'as' => 'admin.reporte.areas',
+        'uses' => 'ReportesController@reporteArea'
+    ));
+    Route::post('admin/reportes/areas', array(
+        'as' => 'admin.reporte.areas.formulario',
+        'uses' => 'ReportesController@graficasArea'
+    ));
+
 
 
 });

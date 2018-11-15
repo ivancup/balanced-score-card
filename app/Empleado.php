@@ -31,4 +31,9 @@ class Empleado extends Model
     {
         return $this->belongsTo(Area::class, 'id_area', 'id');
     }
+
+    public function getNombreEmpleadoAttribute()
+    {
+        return "{$this->nombre} {$this->apellido}";
+    }
 }
